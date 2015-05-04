@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:app="http://schemas.android.com/apk/res-auto"
+          android:paddingBottom="4dp"
+          android:paddingTop="4dp">
+
+    <LinearLayout
+        android:id="@+id/content_left"
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:text="@string/merits_flaws"
+            style="@style/title"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_center"
+        style="@style/linear_layout_column"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/title_center"
+            style="@style/title"/>
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/tvAutofitPath"
+            style="@style/text"
+            android:singleLine="true"/>
+
+        <amagi82.wodcharactersheet.StatRatingBar
+            android:id="@+id/statRatingBarPath"
+            style="@style/rating_bar_ten_star"
+            android:layout_marginBottom="10dp"
+            android:isIndicator="true"/>
+
+        <TextView
+            style="@style/title"
+            android:text="@string/willpower"/>
+
+        <amagi82.wodcharactersheet.StatRatingBar
+            android:id="@+id/statRatingBarMaxWillpower"
+            style="@style/rating_bar_ten_star"
+            android:layout_marginBottom="2dp"
+            android:isIndicator="true"/>
+
+        <amagi82.wodcharactersheet.StatRatingBar
+            android:id="@+id/statRatingBarCurrentWillpower"
+            style="@style/rating_bar_ten_star"
+            android:layout_marginBottom="10dp"
+            app:barType="square"/>
+
+        <TextView
+            style="@style/title"
+            android:text="@string/blood_pool"/>
+
+        <amagi82.wodcharactersheet.StatRatingBar
+            android:id="@+id/statRatingBarBloodPool1"
+            style="@style/rating_bar_ten_star"
+            app:barType="square"
+            app:colorFill="@color/darkRed"/>
+
+        <amagi82.wodcharactersheet.StatRatingBar
+            android:id="@+id/statRatingBarBloodPool2"
+            style="@style/rating_bar_ten_star"
+            app:barType="square"
+            app:colorFill="@color/darkRed"/>
+
+        <TextView
+            android:id="@+id/tvBloodPerTurn"
+            style="@style/text_centered"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_right"
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:text="@string/health"
+            style="@style/title"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <amagi82.wodcharactersheet.StatRatingBar
+                android:id="@+id/statRatingBarHealthLevel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:numStars="7"
+                app:barType="healthbox"/>
+        </LinearLayout>
+
+        <TextView
+            style="@style/title"
+            android:text="@string/weakness"/>
+
+        <me.grantland.widget.AutofitTextView
+            android:id="@+id/tvAutofitWeaknesses"
+            style="@style/text"/>
+
+        <TextView
+            style="@style/title"
+            android:text="@string/experience"/>
+
+        <TextView
+            android:id="@+id/tvExperience"
+            style="@style/text_centered"/>
+    </LinearLayout>
+</TableRow>

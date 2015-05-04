@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:id="@+id/text_left1"
+            style="@style/text"/>
+
+        <TextView
+            android:id="@+id/text_left2"
+            style="@style/text"/>
+
+        <TextView
+            android:id="@+id/text_left3"
+            style="@style/text"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:id="@+id/text_center1"
+            style="@style/text"/>
+
+        <TextView
+            android:id="@+id/text_center2"
+            style="@style/text"/>
+
+        <TextView
+            android:id="@+id/text_center3"
+            style="@style/text"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:id="@+id/text_right1"
+            style="@style/text"/>
+
+        <TextView
+            android:id="@+id/text_right2"
+            style="@style/text"/>
+
+        <TextView
+            android:id="@+id/text_right3"
+            style="@style/text"/>
+
+    </LinearLayout>
+
+</TableRow>

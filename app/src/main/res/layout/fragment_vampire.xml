@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="amagi82.wodcharactersheet.Vampire">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+
+        <include
+            layout="@layout/table_row_text"/>
+
+        <TextView
+            android:id="@+id/headerAttributes"
+            android:layout_marginTop="2dp"
+            style="@style/header"/>
+
+        <include
+            android:id="@+id/attributesBlock"
+            layout="@layout/table_row_main_content"/>
+
+        <TextView
+            android:id="@+id/headerAbilities"
+            android:layout_marginTop="2dp"
+            style="@style/header"/>
+
+        <include
+            android:id="@+id/abilitiesBlock"
+            layout="@layout/table_row_main_content"/>
+
+        <TextView
+            android:id="@+id/headerAdvantages"
+            android:layout_marginTop="2dp"
+            style="@style/header"/>
+
+        <include
+            android:id="@+id/advantagesBlock"
+            layout="@layout/table_row_main_content"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/textDark"/>
+
+        <include
+            android:id="@+id/bottomBlock"
+            layout="@layout/table_row_bottom"/>
+
+    </TableLayout>
+</ScrollView>

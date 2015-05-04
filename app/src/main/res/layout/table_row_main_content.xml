@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableRow
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingBottom="4dp"
+    android:paddingTop="4dp">
+
+    <LinearLayout
+        android:id="@+id/content_left"
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:id="@+id/title_left"
+            style="@style/title"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_center"
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:id="@+id/title_center"
+            style="@style/title"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/content_right"
+        style="@style/linear_layout_column">
+
+        <TextView
+            android:id="@+id/title_right"
+            style="@style/title"/>
+
+    </LinearLayout>
+
+</TableRow>
+

@@ -1,0 +1,71 @@
+<resources>
+
+    <style name="ToolBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="android:windowActionBarOverlay">true</item>
+    </style>
+
+    <!--Used for main headers, like Attributes and Abilities -->
+    <style name="header">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <!--Used for titles, like Talents or Skills -->
+    <style name="title" parent="header">
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!--Used for titles, like Talents or Skills -->
+    <style name="title_column" parent="column">
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/textDark</item>
+    </style>
+
+    <!--Used for plain text in columns, like merit cost -->
+    <style name="text_column" parent="column">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/textMed</item>
+    </style>
+
+    <!--Used for centered plain text, like path -->
+    <style name="text_centered" parent="text">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <!--Used for left-aligned text, like path -->
+    <style name="text">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/textMed</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <!--Used for blocks of stats -->
+    <style name="linear_layout_column" parent="column">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_marginLeft">2dp</item>
+        <item name="android:layout_marginRight">2dp</item>
+    </style>
+
+    <!--Used only as a parent -->
+    <style name="column">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="rating_bar_ten_star">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:numStars">10</item>
+    </style>
+
+</resources>
