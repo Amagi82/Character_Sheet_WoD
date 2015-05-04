@@ -64,6 +64,9 @@ public class MainActivity extends AppCompatActivity implements CharacterListFrag
         anstis.setClan("Gangrel");
         anstis.setGeneration(8);
         anstis.setSire("Howell Davis");
+        anstis.setDamageAgg(1);
+        anstis.setDamageBashing(2);
+        anstis.setDamageLethal(1);
 
         //TODO: possible bug - if user switches languages, hashmap may lose all values
         HashMap<String, Integer> valuesMap = new HashMap<>();

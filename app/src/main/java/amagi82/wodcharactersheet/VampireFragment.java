@@ -85,6 +85,11 @@ public class VampireFragment extends Fragment {
         statRatingBarBloodPool2.setRating(vampire.getCurrentBloodpool() - 10);
         tvBloodPerTurn.setText(getString(R.string.blood_per_turn) + ": " + vampire.getBloodPerTurn());
 
+        StatRatingBar statRatingBarHealth = (StatRatingBar) contentRight.findViewById(R.id.statRatingBarHealthLevel);
+        statRatingBarHealth.setHealthAgg(vampire.getDamageAgg());
+        statRatingBarHealth.setHealthLethal(vampire.getDamageLethal());
+        statRatingBarHealth.setHealthBashing(vampire.getDamageBashing());
+
         AutofitTextView tvAutofitWeaknesses = (AutofitTextView) contentRight.findViewById(R.id.tvAutofitWeaknesses);
         TextView tvExperience = (TextView) contentRight.findViewById(R.id.tvExperience);
 

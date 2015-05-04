@@ -24,6 +24,7 @@
         <attr name="colorOutlinePressed" format="color" />
         <attr name="colorFill" format="color" />
         <attr name="colorFillPressed" format="color" />
+        <attr name="vertical" format="boolean" />
         <attr name="barType" format="enum">
             <enum name="circle" value="0" />
             <enum name="square" value="1" />

@@ -47,6 +47,7 @@ public class StatRatingBar extends RatingBar {
     private Path path = new Path();
     private RectF rectangle = new RectF();
     private float dp = getResources().getDisplayMetrics().density;
+    private boolean vertical = false;
 
     public StatRatingBar(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
@@ -64,7 +65,8 @@ public class StatRatingBar extends RatingBar {
 
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int desiredWidth = (int)(50 * dp * getNumStars());
+
+        int desiredLength = (int)(50 * dp * getNumStars());
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -79,10 +81,10 @@ public class StatRatingBar extends RatingBar {
             width = widthSize;
         } else if (widthMode == MeasureSpec.AT_MOST) {
             //Can't be bigger than...
-            width = Math.min(desiredWidth, widthSize);
+            width = Math.min(desiredLength, widthSize);
         } else {
             //Be whatever you want
-            width = desiredWidth;
+            width = desiredLength;
         }
 
         //Measure Height
@@ -91,11 +93,12 @@ public class StatRatingBar extends RatingBar {
             height = heightSize;
         } else if (heightMode == MeasureSpec.AT_MOST) {
             //Can't be bigger than...
-            height = Math.min(heightSize, width/getNumStars());
+            height = Math.min(heightSize, vertical? desiredLength : width/getNumStars());
         } else {
             //Be whatever you want
-            height = width/getNumStars();
+            height = vertical? desiredLength : width/getNumStars();
         }
+        if(vertical && widthMode != MeasureSpec.EXACTLY) width = Math.min(widthSize, height/getNumStars());
 
         //MUST CALL THIS
         setMeasuredDimension(width, height);
@@ -124,8 +127,9 @@ public class StatRatingBar extends RatingBar {
     @Override
     public void onDraw(@NonNull Canvas canvas) {
         if(getRating() > maxRating) setRating(maxRating); //make sure rating cannot exceed max rating
-        if(getRating() < 0) setRating(0);
+        if(getRating() < 0) setRating(0); //or minimum rating
         float shapeSize = Math.min(getHeight(), getWidth()/getNumStars()) *.90f;
+        if(vertical) shapeSize = Math.min(getWidth(), getHeight()/getNumStars()) *.90f;
 
         paintOutline.setStrokeWidth(shapeSize * .06f);
         paintOutline.setStyle(Paint.Style.STROKE);
@@ -138,27 +142,29 @@ public class StatRatingBar extends RatingBar {
 
         for (int i=0;i<getNumStars();++i) {
             path.computeBounds(rectangle, true);
-            path.offset((i + .5F) * getWidth() / getNumStars() - rectangle.centerX(), getHeight() / 2 - rectangle.centerY());
+            if(!vertical) path.offset((i + .5F) * getWidth() / getNumStars() - rectangle.centerX(), getHeight() / 2 - rectangle.centerY());
 
-            paintOutline.setColor(isPressed() ? colorOutlinePressed : i>=maxRating? colorOutlineInactive : i<getRating()? colorOutlineOn : colorOutlineOff);
+            paintOutline.setColor(isPressed() ? colorOutlinePressed : i >= maxRating ? colorOutlineInactive : i < getRating()? colorOutlineOn : colorOutlineOff);
             paintInside.setColor(isPressed()? colorFillPressed : colorFill);
 
             if(barType == BarType.HEALTHBAR){
-                path.rewind();
-                if(i<=healthAgg){
+                path.reset();
+//                if(healthAgg > 0 && i<=healthAgg){
+//                    path = createPathHealthBox(shapeSize, Healthbox.EMPTY);
+//                    path.offset(getWidth() / 2 - rectangle.centerX(), (i + .5F) * getHeight() / getNumStars() - rectangle.centerY());
+//                    canvas.drawPath(path, paintInside);
+//                    canvas.drawPath(path, paintOutline);
+//                    break;
+//                }else if(healthLethal > 0 && i<= healthAgg+healthLethal){
+//                    path = createPathHealthBox(shapeSize, Healthbox.X);
+//                }else if(healthBashing > 0 && i<= healthAgg+healthLethal+healthBashing){
+//                    path = createPathHealthBox(shapeSize, Healthbox.CHECK);
+//                }else{
                     path = createPathHealthBox(shapeSize, Healthbox.EMPTY);
-                    canvas.drawPath(path, paintInside);
-                    canvas.drawPath(path, paintOutline);
-                }else if(i<= healthAgg+healthLethal){
-                    path = createPathHealthBox(shapeSize, Healthbox.X);
-                    canvas.drawPath(path, paintOutline);
-                }else if(i<= healthAgg+healthLethal+healthBashing){
-                    path = createPathHealthBox(shapeSize, Healthbox.CHECK);
-                    canvas.drawPath(path, paintOutline);
-                }else{
-                    path = createPathHealthBox(shapeSize, Healthbox.EMPTY);
-                    canvas.drawPath(path, paintOutline);
-                }
+//                }
+                path.offset(getWidth() / 2 - rectangle.centerX(), (i + .5F) * getHeight() / getNumStars() - rectangle.centerY());
+                canvas.drawPath(path, paintOutline);
+
             }else {
                 if (i < getRating()) canvas.drawPath(path, paintInside);
                 canvas.drawPath(path, paintOutline);
@@ -175,6 +181,7 @@ public class StatRatingBar extends RatingBar {
             colorOutlinePressed = a.getInt(R.styleable.StatRatingBar_colorOutlinePressed, getResources().getColor(R.color.darkRed));
             colorFill = a.getInt(R.styleable.StatRatingBar_colorFill, getResources().getColor(R.color.fillDark));
             colorFillPressed = a.getInt(R.styleable.StatRatingBar_colorFillPressed, getResources().getColor(R.color.darkRed));
+            vertical = a.getBoolean(R.styleable.StatRatingBar_vertical, false);
             int type = a.getInt(R.styleable.StatRatingBar_barType, 0);
             barType = (type == 0)? BarType.CIRCLE : type == 1? BarType.SQUARE : BarType.HEALTHBAR;
         } finally {

@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"/>
+                android:layout_weight="1"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -103,8 +103,9 @@
                 android:id="@+id/statRatingBarHealthLevel"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_weight="4"
                 android:numStars="7"
+                app:vertical="true"
                 app:barType="healthbox"/>
         </LinearLayout>
 
