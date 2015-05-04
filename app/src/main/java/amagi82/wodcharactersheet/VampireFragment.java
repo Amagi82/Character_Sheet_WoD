@@ -67,7 +67,7 @@ public class VampireFragment extends Fragment {
 
         setMeritFlawBlock(inflater, contentLeft);
 
-        AutofitTextView autofitTextViewPath = (AutofitTextView) contentCenter.findViewById(R.id.tvAutofitPath);
+        AutofitTextView tvAutofitPath = (AutofitTextView) contentCenter.findViewById(R.id.tvAutofitPath);
         StatRatingBar statRatingBarPath = (StatRatingBar) contentCenter.findViewById(R.id.statRatingBarPath);
         StatRatingBar statRatingBarMaxWillpower = (StatRatingBar) contentCenter.findViewById(R.id.statRatingBarMaxWillpower);
         StatRatingBar statRatingBarCurrentWillpower = (StatRatingBar) contentCenter.findViewById(R.id.statRatingBarCurrentWillpower);
@@ -75,7 +75,7 @@ public class VampireFragment extends Fragment {
         StatRatingBar statRatingBarBloodPool2 = (StatRatingBar) contentCenter.findViewById(R.id.statRatingBarBloodPool2);
         TextView tvBloodPerTurn = (TextView) contentCenter.findViewById(R.id.tvBloodPerTurn);
 
-        autofitTextViewPath.setText(vampire.getPath());
+        tvAutofitPath.setText(vampire.getPath());
         statRatingBarPath.setRating(vampire.getHumanityRating());
         statRatingBarMaxWillpower.setRating(vampire.getMaxWillpower());
         statRatingBarCurrentWillpower.setMaxRating(vampire.getMaxWillpower());
@@ -85,9 +85,10 @@ public class VampireFragment extends Fragment {
         statRatingBarBloodPool2.setRating(vampire.getCurrentBloodpool() - 10);
         tvBloodPerTurn.setText(getString(R.string.blood_per_turn) + ": " + vampire.getBloodPerTurn());
 
-        AutofitTextView autofitTextViewWeaknesses = (AutofitTextView) contentRight.findViewById(R.id.tvAutofitWeaknesses);
+        AutofitTextView tvAutofitWeaknesses = (AutofitTextView) contentRight.findViewById(R.id.tvAutofitWeaknesses);
         TextView tvExperience = (TextView) contentRight.findViewById(R.id.tvExperience);
 
+        tvAutofitWeaknesses.setText(vampire.getWeaknessesList().toString());
         tvExperience.setText(vampire.getCurrentXP() + " / " + vampire.getTotalXP());
     }
 
