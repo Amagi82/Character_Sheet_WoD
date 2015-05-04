@@ -36,9 +36,9 @@ public class StatRatingBar extends RatingBar {
     private int colorFill;
     private int colorFillPressed;
     private int maxRating = getNumStars();
-    private int healthBashing;
-    private int healthLethal;
-    private int healthAgg;
+    private int healthBashing = 0;
+    private int healthLethal = 0;
+    private int healthAgg = 0;
     private enum Healthbox {EMPTY, CHECK, X}
     private enum BarType {CIRCLE, SQUARE, HEALTHBAR}
     private BarType barType;
@@ -66,7 +66,7 @@ public class StatRatingBar extends RatingBar {
     @Override
     protected synchronized void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int desiredLength = (int)(50 * dp * getNumStars());
+        int desiredLength = (int)(25 * dp * getNumStars());
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
@@ -93,10 +93,10 @@ public class StatRatingBar extends RatingBar {
             height = heightSize;
         } else if (heightMode == MeasureSpec.AT_MOST) {
             //Can't be bigger than...
-            height = Math.min(heightSize, vertical? desiredLength : width/getNumStars());
+            height = Math.min(heightSize, vertical? Math.min(width*getNumStars(),desiredLength) : width/getNumStars());
         } else {
             //Be whatever you want
-            height = vertical? desiredLength : width/getNumStars();
+            height = vertical? Math.min(width*getNumStars(),desiredLength) : width/getNumStars();
         }
         if(vertical && widthMode != MeasureSpec.EXACTLY) width = Math.min(widthSize, height/getNumStars());
 
@@ -115,6 +115,7 @@ public class StatRatingBar extends RatingBar {
     }
 
     private Path createPathHealthBox(float size, Healthbox mode) {
+        path.reset();
         path.addRect(0, 0, size, size, Path.Direction.CW);
         if(mode != Healthbox.EMPTY) path.lineTo(size,size);
         if(mode == Healthbox.X) {
@@ -141,30 +142,27 @@ public class StatRatingBar extends RatingBar {
         if(barType != BarType.HEALTHBAR) path = barType == BarType.SQUARE? createPathSquare(shapeSize) : createPathCircle(shapeSize);
 
         for (int i=0;i<getNumStars();++i) {
-            path.computeBounds(rectangle, true);
-            if(!vertical) path.offset((i + .5F) * getWidth() / getNumStars() - rectangle.centerX(), getHeight() / 2 - rectangle.centerY());
+
+            if(!vertical){
+                path.computeBounds(rectangle, true);
+                path.offset((i + .5F) * getWidth() / getNumStars() - rectangle.centerX(), getHeight() / 2 - rectangle.centerY());
+            }
 
             paintOutline.setColor(isPressed() ? colorOutlinePressed : i >= maxRating ? colorOutlineInactive : i < getRating()? colorOutlineOn : colorOutlineOff);
             paintInside.setColor(isPressed()? colorFillPressed : colorFill);
 
             if(barType == BarType.HEALTHBAR){
-                path.reset();
-//                if(healthAgg > 0 && i<=healthAgg){
-//                    path = createPathHealthBox(shapeSize, Healthbox.EMPTY);
-//                    path.offset(getWidth() / 2 - rectangle.centerX(), (i + .5F) * getHeight() / getNumStars() - rectangle.centerY());
-//                    canvas.drawPath(path, paintInside);
-//                    canvas.drawPath(path, paintOutline);
-//                    break;
-//                }else if(healthLethal > 0 && i<= healthAgg+healthLethal){
-//                    path = createPathHealthBox(shapeSize, Healthbox.X);
-//                }else if(healthBashing > 0 && i<= healthAgg+healthLethal+healthBashing){
-//                    path = createPathHealthBox(shapeSize, Healthbox.CHECK);
-//                }else{
-                    path = createPathHealthBox(shapeSize, Healthbox.EMPTY);
-//                }
-                path.offset(getWidth() / 2 - rectangle.centerX(), (i + .5F) * getHeight() / getNumStars() - rectangle.centerY());
-                canvas.drawPath(path, paintOutline);
+                boolean agg = i<healthAgg;
+                boolean lethal = i<healthAgg+healthLethal;
+                boolean bashing = i<healthAgg+healthLethal+healthBashing;
 
+                path = createPathHealthBox(shapeSize, agg? Healthbox.EMPTY : lethal? Healthbox.X : bashing? Healthbox.CHECK : Healthbox.EMPTY);
+
+                path.computeBounds(rectangle, true);
+                path.offset(getWidth() / 2 - rectangle.centerX(), (i + .5F) * getHeight() / getNumStars() - rectangle.centerY());
+
+                if(agg) canvas.drawPath(path, paintInside);
+                canvas.drawPath(path, paintOutline);
             }else {
                 if (i < getRating()) canvas.drawPath(path, paintInside);
                 canvas.drawPath(path, paintOutline);

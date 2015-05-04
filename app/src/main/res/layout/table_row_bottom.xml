@@ -92,7 +92,7 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
+                android:layout_weight="4"/>
 
             <TextView
                 android:layout_width="0dp"
@@ -101,10 +101,12 @@
 
             <amagi82.wodcharactersheet.StatRatingBar
                 android:id="@+id/statRatingBarHealthLevel"
+                app:colorOutlineOff="@color/outlineDark"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="4"
+                android:layout_weight="1"
                 android:numStars="7"
+                android:isIndicator="true"
                 app:vertical="true"
                 app:barType="healthbox"/>
         </LinearLayout>

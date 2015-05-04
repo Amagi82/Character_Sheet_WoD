@@ -85,6 +85,7 @@ public class VampireFragment extends Fragment {
         statRatingBarBloodPool2.setRating(vampire.getCurrentBloodpool() - 10);
         tvBloodPerTurn.setText(getString(R.string.blood_per_turn) + ": " + vampire.getBloodPerTurn());
 
+        //TODO: when you set damage, make sure total damage does not exceed 7
         StatRatingBar statRatingBarHealth = (StatRatingBar) contentRight.findViewById(R.id.statRatingBarHealthLevel);
         statRatingBarHealth.setHealthAgg(vampire.getDamageAgg());
         statRatingBarHealth.setHealthLethal(vampire.getDamageLethal());
