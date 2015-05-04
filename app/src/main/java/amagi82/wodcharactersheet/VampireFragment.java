@@ -88,7 +88,7 @@ public class VampireFragment extends Fragment {
         AutofitTextView tvAutofitWeaknesses = (AutofitTextView) contentRight.findViewById(R.id.tvAutofitWeaknesses);
         TextView tvExperience = (TextView) contentRight.findViewById(R.id.tvExperience);
 
-        tvAutofitWeaknesses.setText(vampire.getWeaknessesList().toString());
+        //tvAutofitWeaknesses.setText(vampire.getWeaknessesList());
         tvExperience.setText(vampire.getCurrentXP() + " / " + vampire.getTotalXP());
     }
 
@@ -220,15 +220,16 @@ public class VampireFragment extends Fragment {
         LinearLayout stat = (LinearLayout) inflater.inflate(R.layout.stat, content, false);
         AutofitTextView tvAutofitStat = (AutofitTextView) stat.findViewById(R.id.tvAutofitStat);
         tvAutofitStat.setId(i + 1);
-        tvAutofitStat.setText(list.get(i));
         StatRatingBar statRatingBar = (StatRatingBar) stat.findViewById(R.id.statRatingBar);
         statRatingBar.setId(-i);
         statRatingBar.setRating(vampire.getValuesMap().get(list.get(i)));
         if(isPath){
+            tvAutofitStat.setText("  -" + list.get(i));
             tvAutofitStat.setGravity(Gravity.CENTER_VERTICAL);
             tvAutofitStat.setMaxTextSize(TypedValue.COMPLEX_UNIT_SP, 8);
             tvAutofitStat.setMinTextSize(TypedValue.COMPLEX_UNIT_SP, 5);
-            stat.setPadding((int) (12 * getResources().getDisplayMetrics().density), -2, 0, -4);
+        }else{
+            tvAutofitStat.setText(list.get(i));
         }
         return stat;
     }

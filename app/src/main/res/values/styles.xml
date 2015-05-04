@@ -11,19 +11,19 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/textDark</item>
     </style>
 
     <!--Used for titles, like Talents or Skills -->
     <style name="title" parent="header">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <!--Used for titles, like Talents or Skills -->
     <style name="title_column" parent="column">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/textDark</item>
@@ -31,7 +31,7 @@
 
     <!--Used for plain text in columns, like merit cost -->
     <style name="text_column" parent="column">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/textMed</item>
     </style>
 
@@ -42,7 +42,7 @@
 
     <!--Used for left-aligned text, like path -->
     <style name="text">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">10sp</item>
         <item name="android:textColor">@color/textMed</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>

@@ -19,8 +19,7 @@
         android:id="@+id/content_center"
         style="@style/linear_layout_column"
         android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:gravity="center_horizontal">
+        android:layout_marginRight="4dp">
 
         <TextView
             android:id="@+id/title_center"
@@ -28,7 +27,7 @@
 
         <me.grantland.widget.AutofitTextView
             android:id="@+id/tvAutofitPath"
-            style="@style/text"
+            style="@style/text_centered"
             android:singleLine="true"/>
 
         <amagi82.wodcharactersheet.StatRatingBar
