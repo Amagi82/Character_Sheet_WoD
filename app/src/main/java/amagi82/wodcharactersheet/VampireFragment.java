@@ -25,12 +25,15 @@ import me.grantland.widget.AutofitTextView;
 public class VampireFragment extends Fragment {
 
     Vampire vampire;
+    int maxTraitRating;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_vampire, container, false);
 
         vampire = (Vampire) MainActivity.characterArray.get(getArguments().getInt("index"));
+
+        maxTraitRating = vampire.getMaxTraitRating();
 
         long time = SystemClock.elapsedRealtime();
         setPlayerData(rootView);
@@ -53,6 +56,75 @@ public class VampireFragment extends Fragment {
         Log.i("elapsed time bottom = ", "" + (SystemClock.elapsedRealtime() - time));
 
         return rootView;
+    }
+
+    private void setAttributesBlock(LayoutInflater inflater, View rootView) {
+
+        TextView tvHeader = (TextView) rootView.findViewById(R.id.headerAttributes);
+        tvHeader.setText(getArray(R.array.headers)[0]);
+
+        ViewGroup group = (ViewGroup) rootView.findViewById(R.id.attributesBlock);
+        TextView tvTitleLeft = (TextView) group.findViewById(R.id.title_left);
+        TextView tvTitleCenter = (TextView) group.findViewById(R.id.title_center);
+        TextView tvTitleRight = (TextView) group.findViewById(R.id.title_right);
+
+        tvTitleLeft.setText(getArray(R.array.attributesTitles)[0]);
+        tvTitleCenter.setText(getArray(R.array.attributesTitles)[1]);
+        tvTitleRight.setText(getArray(R.array.attributesTitles)[2]);
+
+        LinearLayout contentLeft = (LinearLayout) group.findViewById(R.id.content_left);
+        LinearLayout contentCenter = (LinearLayout) group.findViewById(R.id.content_center);
+        LinearLayout contentRight = (LinearLayout) group.findViewById(R.id.content_right);
+
+        setStatBlock(R.array.physical, inflater, contentLeft, maxTraitRating + 1);
+        setStatBlock(R.array.social, inflater, contentCenter, maxTraitRating);
+        setStatBlock(R.array.mental, inflater, contentRight, maxTraitRating);
+    }
+
+    private void setAbilitiesBlock(LayoutInflater inflater, View rootView) {
+
+        TextView tvHeader = (TextView) rootView.findViewById(R.id.headerAbilities);
+        tvHeader.setText(getArray(R.array.headers)[1]);
+
+        ViewGroup group = (ViewGroup) rootView.findViewById(R.id.abilitiesBlock);
+        TextView tvTitleLeft = (TextView) group.findViewById(R.id.title_left);
+        TextView tvTitleCenter = (TextView) group.findViewById(R.id.title_center);
+        TextView tvTitleRight = (TextView) group.findViewById(R.id.title_right);
+
+        tvTitleLeft.setText(getArray(R.array.abilitiesTitles)[0]);
+        tvTitleCenter.setText(getArray(R.array.abilitiesTitles)[1]);
+        tvTitleRight.setText(getArray(R.array.abilitiesTitles)[2]);
+
+        LinearLayout contentLeft = (LinearLayout) group.findViewById(R.id.content_left);
+        LinearLayout contentCenter = (LinearLayout) group.findViewById(R.id.content_center);
+        LinearLayout contentRight = (LinearLayout) group.findViewById(R.id.content_right);
+
+        setStatBlock(R.array.talents, inflater, contentLeft, maxTraitRating);
+        setStatBlock(R.array.skills, inflater, contentCenter, maxTraitRating);
+        setStatBlock(R.array.knowledges, inflater, contentRight, maxTraitRating);
+    }
+
+    private void setAdvantagesBlock(LayoutInflater inflater, View rootView) {
+
+        TextView tvHeader = (TextView) rootView.findViewById(R.id.headerAdvantages);
+        tvHeader.setText(getArray(R.array.headers)[2]);
+
+        ViewGroup group = (ViewGroup) rootView.findViewById(R.id.advantagesBlock);
+        TextView tvTitleLeft = (TextView) group.findViewById(R.id.title_left);
+        TextView tvTitleCenter = (TextView) group.findViewById(R.id.title_center);
+        TextView tvTitleRight = (TextView) group.findViewById(R.id.title_right);
+
+        tvTitleLeft.setText(getArray(R.array.advantagesTitles)[0]);
+        tvTitleCenter.setText(getArray(R.array.advantagesTitles)[1]);
+        tvTitleRight.setText(getArray(R.array.advantagesTitles)[2]);
+
+        LinearLayout contentLeft = (LinearLayout) group.findViewById(R.id.content_left);
+        LinearLayout contentCenter = (LinearLayout) group.findViewById(R.id.content_center);
+        LinearLayout contentRight = (LinearLayout) group.findViewById(R.id.content_right);
+
+        setDisciplinesStatBlock(inflater, contentLeft);
+        setStatBlock(vampire.getBackgroundsList(), inflater, contentCenter, maxTraitRating);
+        setStatBlock(vampire.getVirtuesList(), inflater, contentRight, maxTraitRating);
     }
 
     private void setBottomBlock(LayoutInflater inflater, View rootView) {
@@ -85,6 +157,13 @@ public class VampireFragment extends Fragment {
         statRatingBarBloodPool2.setRating(vampire.getCurrentBloodpool() - 10);
         tvBloodPerTurn.setText(getString(R.string.blood_per_turn) + ": " + vampire.getBloodPerTurn());
 
+        TextView tvHealthLevels = (TextView) contentRight.findViewById(R.id.tvHealthLevels);
+        String healthLevel = "";
+        for(String level : getArray(R.array.healthLevels)){
+            healthLevel = healthLevel + level + "\n";
+        }
+        tvHealthLevels.setText(healthLevel.substring(0,healthLevel.length() - 1));
+
         //TODO: when you set damage, make sure total damage does not exceed 7
         StatRatingBar statRatingBarHealth = (StatRatingBar) contentRight.findViewById(R.id.statRatingBarHealthLevel);
         statRatingBarHealth.setHealthAgg(vampire.getDamageAgg());
@@ -98,76 +177,7 @@ public class VampireFragment extends Fragment {
         tvExperience.setText(vampire.getCurrentXP() + " / " + vampire.getTotalXP());
     }
 
-    private void setAdvantagesBlock(LayoutInflater inflater, View rootView) {
-
-        TextView tvHeader = (TextView) rootView.findViewById(R.id.headerAdvantages);
-        tvHeader.setText(getArray(R.array.headers)[2]);
-
-        ViewGroup group = (ViewGroup) rootView.findViewById(R.id.advantagesBlock);
-        TextView tvTitleLeft = (TextView) group.findViewById(R.id.title_left);
-        TextView tvTitleCenter = (TextView) group.findViewById(R.id.title_center);
-        TextView tvTitleRight = (TextView) group.findViewById(R.id.title_right);
-
-        tvTitleLeft.setText(getArray(R.array.advantagesTitles)[0]);
-        tvTitleCenter.setText(getArray(R.array.advantagesTitles)[1]);
-        tvTitleRight.setText(getArray(R.array.advantagesTitles)[2]);
-
-        LinearLayout contentLeft = (LinearLayout) group.findViewById(R.id.content_left);
-        LinearLayout contentCenter = (LinearLayout) group.findViewById(R.id.content_center);
-        LinearLayout contentRight = (LinearLayout) group.findViewById(R.id.content_right);
-
-        setDisciplinesStatBlock(inflater, contentLeft);
-        setStatBlock(vampire.getBackgroundsList(), inflater, contentCenter);
-        setStatBlock(vampire.getVirtuesList(), inflater, contentRight);
-    }
-
-    private void setAttributesBlock(LayoutInflater inflater, View rootView) {
-
-        TextView tvHeader = (TextView) rootView.findViewById(R.id.headerAttributes);
-        tvHeader.setText(getArray(R.array.headers)[0]);
-
-        ViewGroup group = (ViewGroup) rootView.findViewById(R.id.attributesBlock);
-        TextView tvTitleLeft = (TextView) group.findViewById(R.id.title_left);
-        TextView tvTitleCenter = (TextView) group.findViewById(R.id.title_center);
-        TextView tvTitleRight = (TextView) group.findViewById(R.id.title_right);
-
-        tvTitleLeft.setText(getArray(R.array.attributesTitles)[0]);
-        tvTitleCenter.setText(getArray(R.array.attributesTitles)[1]);
-        tvTitleRight.setText(getArray(R.array.attributesTitles)[2]);
-
-        LinearLayout contentLeft = (LinearLayout) group.findViewById(R.id.content_left);
-        LinearLayout contentCenter = (LinearLayout) group.findViewById(R.id.content_center);
-        LinearLayout contentRight = (LinearLayout) group.findViewById(R.id.content_right);
-
-        setStatBlock(R.array.physical, inflater, contentLeft);
-        setStatBlock(R.array.social, inflater, contentCenter);
-        setStatBlock(R.array.mental, inflater, contentRight);
-    }
-
-    private void setAbilitiesBlock(LayoutInflater inflater, View rootView) {
-
-        TextView tvHeader = (TextView) rootView.findViewById(R.id.headerAbilities);
-        tvHeader.setText(getArray(R.array.headers)[1]);
-
-        ViewGroup group = (ViewGroup) rootView.findViewById(R.id.abilitiesBlock);
-        TextView tvTitleLeft = (TextView) group.findViewById(R.id.title_left);
-        TextView tvTitleCenter = (TextView) group.findViewById(R.id.title_center);
-        TextView tvTitleRight = (TextView) group.findViewById(R.id.title_right);
-
-        tvTitleLeft.setText(getArray(R.array.abilitiesTitles)[0]);
-        tvTitleCenter.setText(getArray(R.array.abilitiesTitles)[1]);
-        tvTitleRight.setText(getArray(R.array.abilitiesTitles)[2]);
-
-        LinearLayout contentLeft = (LinearLayout) group.findViewById(R.id.content_left);
-        LinearLayout contentCenter = (LinearLayout) group.findViewById(R.id.content_center);
-        LinearLayout contentRight = (LinearLayout) group.findViewById(R.id.content_right);
-
-        setStatBlock(R.array.talents, inflater, contentLeft);
-        setStatBlock(R.array.skills, inflater, contentCenter);
-        setStatBlock(R.array.knowledges, inflater, contentRight);
-    }
-
-    private void setStatBlock(int arrayId, LayoutInflater inflater, LinearLayout content) {
+    private void setStatBlock(int arrayId, LayoutInflater inflater, LinearLayout content, int numStars) {
 
         for (int i = 0; i < getArray(arrayId).length; i++) {
             LinearLayout stat = (LinearLayout) inflater.inflate(R.layout.stat, content);
@@ -176,11 +186,13 @@ public class VampireFragment extends Fragment {
             tvAutofitStat.setText(getArray(arrayId)[i]);
             StatRatingBar statRatingBar = (StatRatingBar) stat.findViewById(R.id.statRatingBar);
             statRatingBar.setId(-i);
+            statRatingBar.setNumStars(numStars);
+            statRatingBar.setMaxRating(numStars);
             statRatingBar.setRating(vampire.getValuesMap().get(getArray(arrayId)[i]));
         }
     }
 
-    private void setStatBlock(ArrayList<String> list, LayoutInflater inflater, LinearLayout content) {
+    private void setStatBlock(ArrayList<String> list, LayoutInflater inflater, LinearLayout content, int numStars) {
 
         for (int i = 0; i < list.size(); i++) {
             LinearLayout stat = (LinearLayout) inflater.inflate(R.layout.stat, content);
@@ -189,6 +201,8 @@ public class VampireFragment extends Fragment {
             tvAutofitStat.setText(list.get(i));
             StatRatingBar statRatingBar = (StatRatingBar) stat.findViewById(R.id.statRatingBar);
             statRatingBar.setId(-i);
+            statRatingBar.setNumStars(numStars);
+            statRatingBar.setMaxRating(numStars);
             statRatingBar.setRating(vampire.getValuesMap().get(list.get(i)));
         }
     }
@@ -228,6 +242,7 @@ public class VampireFragment extends Fragment {
         tvAutofitStat.setId(i + 1);
         StatRatingBar statRatingBar = (StatRatingBar) stat.findViewById(R.id.statRatingBar);
         statRatingBar.setId(-i);
+        statRatingBar.setMaxRating(vampire.getMaxDisciplineRating());
         statRatingBar.setRating(vampire.getValuesMap().get(list.get(i)));
         if(isPath){
             tvAutofitStat.setText("  -" + list.get(i));
